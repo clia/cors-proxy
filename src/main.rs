@@ -43,6 +43,15 @@ async fn forward(
 
 #[ntex::main]
 async fn main() -> std::io::Result<()> {
+    let _guard = clia_tracing_config::build()
+        .filter_level("info")
+        .with_ansi(true)
+        .to_stdout(true)
+        .directory("./logs")
+        .file_name("clia-cors-proxy.log")
+        .rolling("daily")
+        .init();
+
     let matches = clap::App::new("HTTP Proxy")
         .arg(
             Arg::with_name("listen_addr")

@@ -1,6 +1,6 @@
 [package]
 name = "clia-cors-proxy"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["clia <clia@163.com>"]
 edition = "2021"
 description = "A http service proxy to add CORS headers."
@@ -10,7 +10,8 @@ license = "MIT"
 readme = "README.md"
 
 [dependencies]
-ntex = { version = "0.6.0", features = ["tokio"] }
 clap = "2.32"
+clia-tracing-config = "0.2"
 futures = "0.3"
+ntex = { version = "0.6", features = ["tokio"] }
 url = "2.1"
