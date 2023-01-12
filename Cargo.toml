@@ -1,0 +1,11 @@
+[package]
+name = "clia-cors-proxy"
+version = "0.1.0"
+authors = ["clia <clia@163.com>", "Rotem Yaari <vmalloc@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+ntex = { version = "0.6.0-beta.0", features = ["tokio"] }
+clap = "2.32"
+futures = "0.3"
+url = "2.1"
