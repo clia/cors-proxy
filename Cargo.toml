@@ -1,6 +1,6 @@
 [package]
 name = "clia-cors-proxy"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["clia <clia@163.com>"]
 edition = "2021"
 description = "A http service proxy to add CORS headers."

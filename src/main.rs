@@ -12,6 +12,24 @@ async fn forward(
     url: web::types::State<Url>,
     client: web::types::State<Client>,
 ) -> Result<HttpResponse, Error> {
+    // Direct respond for OPTIONS requests.
+    if req.method() == ntex::http::Method::OPTIONS {
+        let mut client_resp = HttpResponse::build(ntex::http::StatusCode::NO_CONTENT);
+
+        client_resp.header(ntex::http::header::ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        client_resp.header(ntex::http::header::ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        client_resp.header(ntex::http::header::ACCESS_CONTROL_ALLOW_HEADERS, "Authorization,Accept,Origin,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range");
+        client_resp.header(
+            ntex::http::header::ACCESS_CONTROL_ALLOW_METHODS,
+            "GET,POST,OPTIONS,PUT,DELETE,PATCH",
+        );
+        client_resp.header(ntex::http::header::ACCESS_CONTROL_MAX_AGE, 1728000);
+        client_resp.header(ntex::http::header::CONTENT_TYPE, "text/plain charset=UTF-8");
+        client_resp.header(ntex::http::header::CONTENT_LENGTH, 0);
+
+        return Ok(client_resp.finish());
+    }
+
     let mut new_url = url.get_ref().clone();
     new_url.set_path(req.uri().path());
     new_url.set_query(req.uri().query());
@@ -30,6 +48,7 @@ async fn forward(
     let mut res = forwarded_req.send_body(body).await.map_err(Error::from)?;
 
     let mut client_resp = HttpResponse::build(res.status());
+
     // Remove `Connection` as per
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection#Directives
     for (header_name, header_value) in res.headers().iter().filter(|(h, _)| *h != "connection") {
