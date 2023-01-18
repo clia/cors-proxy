@@ -15,6 +15,6 @@ clia-cors-proxy localhost 19003 example.com 80
 
 ## Changelog
 
-- Version 0.1.2: Direct respond for OPTIONS requests.
+- Version 0.2.0: Direct respond for OPTIONS requests.
 - Version 0.1.1: Improve log output.
 - Version 0.1.0: Initial version.
