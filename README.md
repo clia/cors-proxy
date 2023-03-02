@@ -2,6 +2,20 @@
 
 A http service proxy to add CORS headers.
 
+## Install
+
+1. Install Rust:
+
+```shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+2. Install this:
+
+```shell
+cargo install clia-cors-proxy
+```
+
 ## Usage
 
 clia-cors-proxy `<LISTEN ADDR>` `<LISTEN PORT>` `<FWD ADDR>` `<FWD PORT>`
