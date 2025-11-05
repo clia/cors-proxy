@@ -118,15 +118,27 @@ async fn main() -> std::io::Result<()> {
     };
     let forwarded_port = value_t!(matches, "forward_port", u16).unwrap_or_else(|e| e.exit());
 
-    let forward_url = Url::parse(&format!(
-        "http://{}",
-        (forwarded_addr, forwarded_port)
-            .to_socket_addrs()
-            .unwrap()
-            .next()
-            .unwrap()
-    ))
-    .unwrap();
+    let forward_url = if forwarded_port == 443 {
+        Url::parse(&format!(
+            "https://{}",
+            (forwarded_addr, forwarded_port)
+                .to_socket_addrs()
+                .unwrap()
+                .next()
+                .unwrap()
+        ))
+        .unwrap()
+    } else {
+        Url::parse(&format!(
+            "http://{}",
+            (forwarded_addr, forwarded_port)
+                .to_socket_addrs()
+                .unwrap()
+                .next()
+                .unwrap()
+        ))
+        .unwrap()
+    };
 
     web::server(move || {
         App::new()
